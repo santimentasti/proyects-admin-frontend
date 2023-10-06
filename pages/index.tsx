@@ -1,7 +1,7 @@
 import AuthWrapper from "@/components/AuthWrapper";
 import Link from "next/link";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import ProyectosListado from "./proyectos/ProyectosTotales";
+import ProyectosListado from "./proyectos/ProyectosListado";
 function Home() {
   return (
     <>
