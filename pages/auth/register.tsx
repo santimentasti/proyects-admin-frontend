@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
+import axios from 'axios'; // Importa Axios
 
 interface RegisterForm {
   nombre: string;
@@ -12,7 +13,6 @@ interface RegisterForm {
 }
 
 const Register: React.FC = () => {
-
   const apiUrl = 'http://localhost:8080';
   const [formData, setFormData] = useState<RegisterForm>({
     nombre: '',
@@ -30,17 +30,15 @@ const Register: React.FC = () => {
 
   const handleRegister = async () => {
     try {
-      // Realiza una solicitud POST al servidor para registrar al usuario
-      const response = await fetch(`${apiUrl}/auth/registro`, {
-        method: 'POST',
+      // Realiza una solicitud POST al servidor para registrar al usuario utilizando Axios
+      const response = await axios.post(`${apiUrl}/auth/registro`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        console.log(response)
+      if (response.status === 200) {
+        console.log(response);
         window.location.href = '/';
       } else {
         // Registro fallido, muestra un mensaje de error
@@ -48,7 +46,9 @@ const Register: React.FC = () => {
       }
     } catch (error) {
       console.error('Error al registrar al usuario:', error);
-      setError('Se produjo un error al registrar al usuario. Por favor, inténtalo de nuevo más tarde.');
+      setError(
+        'Se produjo un error al registrar al usuario. Por favor, inténtalo de nuevo más tarde.'
+      );
     }
   };
 

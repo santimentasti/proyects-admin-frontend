@@ -3,6 +3,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import Link from "next/link";
+import axios from "axios";
 
 interface LoginForm {
   username: string;
@@ -23,16 +24,18 @@ const Login: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("/auth/login", {
-        method: "POST",
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, formData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        window.location.href = "/";
+      if (response.status === 200) {
+        console.log("response", response);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId);
+        // Redirige al usuario a la página principal u otra página adecuada
+       window.location.href = "/";
       } else {
         setError("Nombre de usuario o contraseña incorrectos");
       }
@@ -42,10 +45,6 @@ const Login: React.FC = () => {
         "Se produjo un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde."
       );
     }
-  };
-
-  const handleRegister = () => {
-    window.location.href = '/auth/register';
   };
 
   return (
@@ -67,11 +66,10 @@ const Login: React.FC = () => {
         <Button label="Iniciar Sesión" onClick={handleLogin} />
         {error && <p className="error-message">{error}</p>}
       </Card>
-      <Link href="/auth/register">
-        Registrarse
-      </Link>
+      <Link href="/auth/register">Registrarse</Link>
     </>
   );
-}
+};
 
 export default Login;
+
