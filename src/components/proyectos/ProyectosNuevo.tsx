@@ -3,19 +3,26 @@ import axios from "axios";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Proyecto } from "./ProyectosListado";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const ProyectosNuevo = () => {
   const router = useRouter();
   const [nombre, setNombre] = useState<string>("");
   const [descripcion, setDescripcion] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   const crearProyecto = async () => {
+    if (!nombre || !descripcion) {
+      setError("Por favor completa todos los campos.");
+      return;
+    }
+
+    setError(null);
     const userIdString = localStorage.getItem("userId");
     const usuarioId = userIdString ? parseInt(userIdString) : null;
-    console.log("usuarioId", usuarioId)
-    console.log("userIdString", userIdString)
+    console.log("usuarioId", usuarioId);
+    console.log("userIdString", userIdString);
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/proyectos/`,
@@ -26,7 +33,7 @@ const ProyectosNuevo = () => {
         }
       );
       console.log("Proyecto creado:", response.data);
-      router.push('/');
+      router.push("/");
     } catch (error) {
       console.error("Error al crear el proyecto", error);
     }
@@ -54,7 +61,16 @@ const ProyectosNuevo = () => {
           <label htmlFor="descripcion">Descripción</label>
         </span>
       </div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <Button label="Crear proyecto" onClick={crearProyecto} />
+      <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+        <Button
+          label="Volver"
+          onClick={() => router.push("/")}
+          className="p-button-danger"
+          size="small"
+        />
+      </div>
     </>
   );
 };

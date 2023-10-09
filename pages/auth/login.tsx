@@ -4,6 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 interface LoginForm {
   username: string;
@@ -11,6 +12,7 @@ interface LoginForm {
 }
 
 const Login: React.FC = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState<LoginForm>({
     username: "",
     password: "",
@@ -34,8 +36,7 @@ const Login: React.FC = () => {
         console.log("response", response);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
-        // Redirige al usuario a la página principal u otra página adecuada
-       window.location.href = "/";
+        router.push("/");
       } else {
         setError("Nombre de usuario o contraseña incorrectos");
       }

@@ -30,7 +30,6 @@ const Register: React.FC = () => {
 
   const handleRegister = async () => {
     try {
-      // Realiza una solicitud POST al servidor para registrar al usuario utilizando Axios
       const response = await axios.post(`${apiUrl}/auth/registro`, formData, {
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +40,6 @@ const Register: React.FC = () => {
         console.log(response);
         window.location.href = '/';
       } else {
-        // Registro fallido, muestra un mensaje de error
         setError('Error al registrar al usuario. Por favor, inténtalo de nuevo.');
       }
     } catch (error) {

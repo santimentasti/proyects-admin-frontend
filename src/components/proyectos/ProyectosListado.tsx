@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
-import ProyectosDetalle from "./ProyectosDetalle"; // Importa el componente de detalle
 import { Card } from "primereact/card";
 import { useRouter } from "next/router";
-export type Proyecto = {
-  id: number;
-  nombre: string;
-  descripcion: string;
-  usuarioId: number;
-};
+import DetallePage from "../../../pages/proyectos/[id]";
+import { Proyecto } from "@/models/Proyecto";
+
 
 const ProyectosListado = () => {
   const router = useRouter();
@@ -19,7 +15,6 @@ const ProyectosListado = () => {
   >(undefined);
 
   useEffect(() => {
-    // Realiza una solicitud GET al servidor para obtener la lista de proyectos
     const obtenerProyectos = async () => {
       try {
         const response = await axios.get(
@@ -40,9 +35,9 @@ const ProyectosListado = () => {
 
   const handleProyectoClick = (proyecto: Proyecto) => {
     console.log("proyecto", proyecto);
-    /* router.push(`/proyectos/${proyecto.id}`); */
-    setProyectoSeleccionado(proyecto);
-  };
+    router.push(`/proyectos/${proyecto.id}`);
+/*     setProyectoSeleccionado(proyecto);
+ */  };
 
   return (
     <>
@@ -72,9 +67,7 @@ const ProyectosListado = () => {
         </ul>
         <Button label="Crear proyecto" onClick={handleCrearProyectoClick} />
       </Card>
-      {proyectoSeleccionado && (
-        <ProyectosDetalle proyecto={proyectoSeleccionado as Proyecto} />
-      )}
+      {proyectoSeleccionado && <DetallePage />}
     </>
   );
 };
