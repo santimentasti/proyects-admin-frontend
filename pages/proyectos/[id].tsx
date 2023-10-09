@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import ProyectosDetalle from "@/components/proyectos/ProyectosDetalle";
-import withAuthentication from "@/components/auth/WithAuthentication";
 
 const DetallePage = () => {
   const router = useRouter();
@@ -14,4 +13,4 @@ const DetallePage = () => {
   );
 };
 
-export default withAuthentication(DetallePage);
+export default DetallePage;

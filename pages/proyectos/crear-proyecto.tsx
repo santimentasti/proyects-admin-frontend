@@ -1,4 +1,3 @@
-import withAuthentication from "@/components/auth/WithAuthentication";
 import ProyectosNuevo from "@/components/proyectos/ProyectosNuevo";
 import React from "react";
 
@@ -11,4 +10,4 @@ const CrearProyectoPage: React.FC = () => {
   );
 };
 
-export default withAuthentication(CrearProyectoPage);
+export default CrearProyectoPage;

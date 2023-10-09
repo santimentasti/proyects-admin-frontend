@@ -25,7 +25,6 @@ function Home() {
       {isLoggedIn ? (
         <>
           <h1>Bienvenido al Administrador de proyectos</h1>
-
           <ProyectosListado />
           <div id="cerrar-sesion-btn">
             <Button

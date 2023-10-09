@@ -4,9 +4,11 @@ import axios from "axios";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import React, { useEffect, useState } from "react";
+import { Colaborador } from "@/models/Colaborador";
 
 type TareasListadoProps = {
   proyecto: Proyecto;
+  colaboradores: Colaborador[];
   tareaCreada: boolean;
   tareasUpdated: () => void;
 };
@@ -25,6 +27,8 @@ const TareasListado = (props: TareasListadoProps) => {
     handleGetTareasPorProyectoId();
   }, [props.tareaCreada]);
 
+  
+
   const handleGetTareasPorProyectoId = async () => {
     try {
       const response = await axios.get<Tarea[]>(
@@ -42,7 +46,6 @@ const TareasListado = (props: TareasListadoProps) => {
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_URL}/tareas/${tareaId}`
       );
-
 
       const updatedTareas = tareas.filter((tarea) => tarea.id !== tareaId);
       setTareas(updatedTareas);
@@ -84,7 +87,9 @@ const TareasListado = (props: TareasListadoProps) => {
 
   const handleMarcarTareaComoCompleta = async (tareaId: number) => {
     try {
-      let response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/tareas/completar/${tareaId}`);
+      let response = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/tareas/completar/${tareaId}`
+      );
 
       const updatedTareas = tareas.map((tarea) => {
         if (tarea.id === tareaId) {
@@ -99,6 +104,14 @@ const TareasListado = (props: TareasListadoProps) => {
       console.error("Error al guardar la edición de la tarea", error);
     }
   };
+
+  const tienePermisoEditar:boolean = (
+    localStorage.getItem("userId") === props.proyecto.usuarioId?.toString() ||
+    props.colaboradores?.some(
+      (colaborador) =>
+        colaborador.usuarioId === Number(localStorage.getItem("userId"))
+    )
+  );
 
   return (
     <>
@@ -184,26 +197,36 @@ const TareasListado = (props: TareasListadoProps) => {
                   </>
                 ) : (
                   <>
-                    <Button
-                      onClick={() => handleEditarTarea(tarea.id)}
-                      label="Editar"
-                      className="p-button-info"
-                      style={{ marginRight: "5px" }}
-                    />{
-                        tarea.estado == 'pendiente' &&
-                    <Button
-                      onClick={() => handleMarcarTareaComoCompleta(tarea.id)}
-                      label="Tarea Completada"
-                      className="p-button-info"
-                      style={{ marginRight: "5px" }}
-                    />}
+                    {tienePermisoEditar && (
+                      <>
+                        <Button
+                          onClick={() => handleEditarTarea(tarea.id)}
+                          label="Editar"
+                          className="p-button-info"
+                          style={{ marginRight: "5px" }}
+                        />
+                        {tarea.estado == "pendiente" && (
+                          <Button
+                            onClick={() =>
+                              handleMarcarTareaComoCompleta(tarea.id)
+                            }
+                            label="Tarea Completada"
+                            className="p-button-info"
+                            style={{ marginRight: "5px" }}
+                          />
+                        )}
+                      </>
+                    )}
                   </>
                 )}
-                <Button
-                  onClick={() => handleEliminarTarea(tarea.id)}
-                  label="Eliminar"
-                  className="p-button-danger"
-                />
+                {localStorage.getItem("userId") ===
+                  props.proyecto.usuarioId?.toString() && (
+                  <Button
+                    onClick={() => handleEliminarTarea(tarea.id)}
+                    label="Eliminar"
+                    className="p-button-danger"
+                  />
+                )}
               </div>
             </li>
           ))}
