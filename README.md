@@ -2,13 +2,13 @@
 
 2. Correr dependiendo el manejador de paquetes instalado:
 
-npm run dev
+- npm run dev
 
-yarn dev
+- yarn dev
 
-pnpm dev
+- pnpm dev
 
-bun dev
+- bun dev
 
 3. Luego crear en el directorio raiz de proyects-admin-frontend un archivo con el siguiente nombre: .env.local
 
