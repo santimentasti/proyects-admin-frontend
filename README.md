@@ -1,6 +1,12 @@
-1. Primero de todo correr este comando en la raíz del proyecto: npm install
+Primero de todo correr este comando en la raíz del proyecto: npm install
 
-2. Correr dependiendo el manejador de paquetes instalado:
+Luego crear en el directorio raiz de proyects-admin-frontend un archivo con el siguiente nombre: .env.local
+
+Dentro del mismo colocar estos valores:
+
+NEXT_PUBLIC_API_URL = 'http://localhost:8080' (8080 es el puerto que yo elegi para que utilice la API, puede variar según el puerto que desee)
+
+Correr dependiendo el manejador de paquetes instalado:
 
 - npm run dev
 
@@ -10,11 +16,6 @@
 
 - bun dev
 
-3. Luego crear en el directorio raiz de proyects-admin-frontend un archivo con el siguiente nombre: .env.local
-
-Dentro del mismo colocar estos valores:
-
-NEXT_PUBLIC_API_URL = 'http://localhost:8080' (8080 es el puerto que yo elegi para que utilice la API, puede variar según el puerto que desee)
 
 Tecnologias utilizadas:
 
