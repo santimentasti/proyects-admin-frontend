@@ -10,9 +10,15 @@ Correr dependiendo el manejador de paquetes instalado:
 
 - npm run dev
 
+  o
+
 - yarn dev
 
+  o
+
 - pnpm dev
+
+  o
 
 - bun dev
 
