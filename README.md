@@ -1,6 +1,6 @@
-Primero de todo correr este comando en la raíz del proyecto: npm install
+1. Primero de todo correr este comando en la raíz del proyecto: npm install
 
-Primero correr dependiendo el manejador de paquetes instalado:
+2. Correr dependiendo el manejador de paquetes instalado:
 
 npm run dev
 
@@ -10,7 +10,7 @@ pnpm dev
 
 bun dev
 
-Luego crear en el directorio raiz de proyects-admin-frontend un archivo con el siguiente nombre: .env.local
+3. Luego crear en el directorio raiz de proyects-admin-frontend un archivo con el siguiente nombre: .env.local
 
 Dentro del mismo colocar estos valores:
 
