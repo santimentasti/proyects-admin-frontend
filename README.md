@@ -6,7 +6,7 @@ Dentro del mismo colocar estos valores:
 
 NEXT_PUBLIC_API_URL = 'http://localhost:8080' (8080 es el puerto que yo elegi para que utilice la API, puede variar según el puerto que desee)
 
-Correr dependiendo el manejador de paquetes instalado:
+Para iniciar el proyecto correr dependiendo el manejador de paquetes instalado:
 
 - npm run dev
 
